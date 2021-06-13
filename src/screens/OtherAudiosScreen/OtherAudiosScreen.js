@@ -41,7 +41,8 @@ class OtherAudiosScreen extends PureComponent {
   goToScreen = (surah) => {
     // console.log("this.props------", this.props);
 
-    this.props.setCurrentSurah(surah);
+    this.props.setCurrentSurah({ surah: surah, quranIndex: false });
+
     CommonService.goToScreenHideTopBar(
       this.props.componentId,
       SURAH_PLAY_SCREEN

@@ -40,7 +40,7 @@ class BookmarksScreen extends PureComponent {
   goToScreen = (bookmark) => {
     this.props.setCurrentSurah({
       surah: bookmark.surah,
-      quranIndex: true,
+      quranIndex: bookmark.surah.id === 0 ? false : true,
       position: bookmark.position,
     });
     CommonService.goToScreenHideTopBar(
