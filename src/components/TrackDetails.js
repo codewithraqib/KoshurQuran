@@ -12,11 +12,13 @@ const TrackDetails = ({
   onArtistPress,
 }) => (
   <View style={styles.container}>
-    <TouchableOpacity onPress={() => onLeftButtonPress(audioUrl)}>
-      <Image
-        style={styles.button}
-        source={require("../assets/icons/download.png")}
-      />
+    <TouchableOpacity onPress={onRightButtonPress}>
+      <View style={styles.moreButton}>
+        <Image
+          style={styles.button}
+          source={require("../assets/icons/more-circle.png")}
+        />
+      </View>
     </TouchableOpacity>
     <View style={styles.detailsWrapper}>
       <Text style={styles.title} onPress={onTitlePress}>
@@ -26,13 +28,12 @@ const TrackDetails = ({
         {artist}
       </Text>
     </View>
-    <TouchableOpacity onPress={onRightButtonPress}>
-      <View style={styles.moreButton}>
-        <Image
-          style={styles.button}
-          source={require("../assets/icons/more-circle.png")}
-        />
-      </View>
+
+    <TouchableOpacity onPress={() => onLeftButtonPress(audioUrl)}>
+      <Image
+        style={styles.button}
+        source={require("../assets/icons/bookmark.png")}
+      />
     </TouchableOpacity>
   </View>
 );

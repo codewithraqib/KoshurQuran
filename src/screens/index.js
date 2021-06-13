@@ -14,3 +14,4 @@ export { default as DonationScreen } from "./DonationScreen/DonationScreen";
 export {
   default as OurComapnyScreen,
 } from "./OurComapnyScreen/OurComapnyScreen";
+export { default as BookmarksScreen } from "./BookmarksScreen/BookmarksScreen";

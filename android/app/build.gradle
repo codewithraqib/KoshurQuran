@@ -136,8 +136,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
-        versionCode 1597833979
-        versionName "3.5"
+        versionCode 1001
+        versionName "0.1"
         multiDexEnabled true
     }
     splits {
@@ -200,9 +200,7 @@ dependencies {
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
     implementation project(':react-native-shimmer')
     implementation project(':react-native-svg')
-    implementation project(':react-native-linear-gradient')
     implementation project(':react-native-razorpay')
-    implementation project(':react-native-alarm-notification')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

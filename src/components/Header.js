@@ -30,7 +30,7 @@ class Header extends Component {
         <Text onPress={this.props.onMessagePress} style={styles.message}>
           {this.props.message.toUpperCase()}
         </Text>
-        <TouchableOpacity onPress={this.props.onQueuePress}>
+        <TouchableOpacity onPress={this.props.onRightIconPress}>
           <Image
             style={styles.button}
             source={require("../assets/icons/book.png")}
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     flexDirection: "row",
-    backgroundColor: "#444",
+    backgroundColor: "#000",
   },
   message: {
     flex: 1,

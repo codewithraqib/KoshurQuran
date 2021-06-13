@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Switch, Linking } from "react-native";
+import { View, Switch, Linking, ToastAndroid } from "react-native";
 import AlbumArt from "./AlbumArt";
 import TrackDetails from "./TrackDetails";
 import SeekBar from "./SeekBar";
@@ -10,6 +10,7 @@ import PBModal from "./PBModal";
 import PBText from "./PBText";
 import { colors, dimensions } from "src/theme";
 import storageService from "src/services/storageService";
+import Toast from "react-native-easy-toast";
 
 export default class Player extends Component {
   constructor(props) {
@@ -22,10 +23,19 @@ export default class Player extends Component {
       selectedTrack: 0,
       repeatOn: false,
       shuffleOn: false,
+      bookmarkedTrack: true,
     };
   }
 
   componentDidMount() {
+    console.log("props in player are-------", this.props);
+
+    if (this.props.position) {
+      this.setState({
+        currentPosition: this.props.position,
+        bookmarkedTrack: true,
+      });
+    }
     storageService.getItem("repeatVideo").then((repeat) => {
       //   console.log("hey i am checking region", repeat);
       if (repeat) {
@@ -53,10 +63,16 @@ export default class Player extends Component {
 
   setDuration = (data) => {
     // console.log("Total length", data.duration);
+
     this.setState({
       totalLength: Math.floor(data.duration),
       loading: false,
     });
+
+    //if bookmarked item and seeked to bookmarked location
+    if (this.props.position && this.state.bookmarkedTrack) {
+      this.seek(this.props.position);
+    }
   };
 
   setTime = (data) => {
@@ -67,6 +83,7 @@ export default class Player extends Component {
   };
 
   seek = (time) => {
+    console.log("Seeeeekkkkkk data ------", time);
     time = Math.round(time);
     this.refs.audioElement && this.refs.audioElement.seek(time);
     this.setState({
@@ -100,6 +117,7 @@ export default class Player extends Component {
   };
 
   onForward = () => {
+    this.setState({ bookmarkedTrack: false });
     if (this.state.selectedTrack < this.props.tracks.length - 1) {
       this.refs.audioElement && this.refs.audioElement.seek(0);
       this.setState({ isChanging: true });
@@ -118,6 +136,9 @@ export default class Player extends Component {
   };
 
   loadStart = () => {
+    if (this.props.position) {
+      this.setState({ currentPosition: this.props.position });
+    }
     this.setState({ loading: true });
   };
 
@@ -218,6 +239,42 @@ export default class Player extends Component {
     this.setState({ loading: false });
   };
 
+  onEnd = () => {};
+
+  bookmark = (surah) => {
+    let surahName = surah.title;
+    let data = [];
+
+    storageService.getItem("bookmarks").then((bookmarks) => {
+      let parsedData = JSON.parse(bookmarks);
+
+      if (bookmarks && bookmarks.length > 0) {
+        data = [...parsedData];
+        data.push({
+          id: surah.id,
+          surah: surah,
+          position: this.state.currentPosition,
+        });
+        if (storageService.setItem("bookmarks", JSON.stringify(data))) {
+          this.refs.toast.show("Bookmark added!");
+        }
+      } else {
+        data = [
+          {
+            id: surah.id,
+            surah: surah,
+            position: this.state.currentPosition,
+          },
+        ];
+        if (storageService.setItem("bookmarks", JSON.stringify(data))) {
+          this.refs.toast.show("Bookmark added!");
+        }
+      }
+
+      // storageService.removeItem("bookmarks");
+    });
+  };
+
   render() {
     const track = this.props.tracks[this.state.selectedTrack];
     const video = this.state.isChanging ? null : (
@@ -229,7 +286,8 @@ export default class Player extends Component {
         onLoadStart={this.loadStart} // Callback when video starts to load
         onLoad={this.setDuration.bind(this)} // Callback when video loads
         onProgress={this.setTime.bind(this)} // Callback every ~250ms with currentTime
-        onEnd={this.onEnd} // Callback when playback finishes
+        onEnd={this.onForward} // Callback when playback finishes
+        //  onEnd={this.onEnd} // Callback when playback finishes
         onError={this.videoError} // Callback when video cannot be loaded
         style={styles.audioElement}
         playWhenInactive={true}
@@ -248,7 +306,8 @@ export default class Player extends Component {
           title={track.title}
           artist={track.artist}
           audioUrl={track.audioUrl}
-          onLeftButtonPress={(surah) => this.downloadSurah(surah)}
+          onLeftButtonPress={() => this.bookmark(track)}
+          // onLeftButtonPress={(surah) => this.downloadSurah(surah)}
           onRightButtonPress={() => this.setState({ showMoreModal: true })}
         />
 
@@ -285,6 +344,8 @@ export default class Player extends Component {
         {this.renderMoreInforModal()}
 
         <Loader loading={this.state.loading} />
+
+        <Toast ref="toast" />
       </View>
     );
   }

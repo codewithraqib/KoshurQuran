@@ -16,6 +16,7 @@ import {
   OurComapnyScreen,
   SurahPlayScreen,
   OtherAudiosScreen,
+  BookmarksScreen,
 } from "src/screens";
 import { Provider } from "src/redux";
 import SideMenu from "src/components/SideMenu";
@@ -34,6 +35,7 @@ import {
   OUR_COMPANY_SCREEN,
   SURAH_PLAY_SCREEN,
   OTHER_AUDIO_SCREEN,
+  BOOKMARKS_SCREEN,
 } from "./Screens";
 
 function WrappedComponent(Component) {
@@ -81,6 +83,10 @@ export default function() {
   );
   Navigation.registerComponent(OUR_COMPANY_SCREEN, () =>
     WrappedComponent(OurComapnyScreen)
+  );
+
+  Navigation.registerComponent(BOOKMARKS_SCREEN, () =>
+    WrappedComponent(BookmarksScreen)
   );
 
   console.info("All screens have been registered...");

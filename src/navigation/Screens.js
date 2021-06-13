@@ -12,3 +12,4 @@ export const SIDE_MENU = "demo.SideMenu";
 export const INFO_SCREEN = "demo.InfoScreen";
 export const DONATION_SCREEN = "demo.DonationScreen";
 export const OUR_COMPANY_SCREEN = "demo.OurComapnyScreen";
+export const BOOKMARKS_SCREEN = "demo.BookmarksScreen";

@@ -31,6 +31,12 @@ class BookListScreen extends PureComponent {
           link: "https://bracecodes.in/jkmeeqat/SalatSalam.pdf",
           image: require("../../assets/images/ayoub_sb.jpeg"),
         },
+        {
+          id: 2,
+          name: "Mamulat",
+          link: "https://bracecodes.in/jkmeeqat/mamulat.pdf",
+          image: require("../../assets/images/ayoub_sb.jpeg"),
+        },
       ],
     };
   }

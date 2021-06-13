@@ -15,6 +15,7 @@ import { connectData } from "src/redux";
 import { Navigation } from "react-native-navigation";
 import {
   ALARM_SCREEN,
+  BOOKMARKS_SCREEN,
   BOOK_LIST_SCREEN,
   DONATION_SCREEN,
   HOME_SCREEN,
@@ -39,6 +40,13 @@ import WebView from "react-native-webview";
 // import PBContactModal from './PBContactModal';
 
 const menuItems = [
+  {
+    id: "4",
+    name: "Bookmarks",
+    src: require("../assets/images/books.png"),
+    screen: BOOKMARKS_SCREEN,
+    title: "islamic",
+  },
   {
     id: "0",
     name: "Audios",
@@ -130,7 +138,7 @@ const WelcomeContainer = (props) => {
             white={true}
             style={{ marginLeft: 10, marginBottom: 10 }}
           >
-            Quran | Aasan Kashur Tarjam
+            Quran Tarjam - Kashur
           </PBText>
         </View>
         {/* </View>

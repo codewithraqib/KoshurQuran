@@ -8,22 +8,11 @@ import { get } from "lodash";
 
 import { pushTutorialScreen } from "src/navigation";
 import { connectData } from "src/redux";
-import { Image } from "react-native-svg";
-import PBText from "src/components/PBText";
-// import PDFView from "react-native-view-pdf";
+
 import CarpoolHeader from "src/components/CarpoolHeader";
 import FullQuizBG from "src/components/FullQuizBG";
 import { dimensions } from "src/theme";
 import Pdf from "react-native-pdf";
-
-const resources = {
-  file:
-    Platform.OS === "ios"
-      ? "downloadedDocument.pdf"
-      : "/sdcard/Download/downloadedDocument.pdf",
-  url: "https://www.cerstvyboby.cz/user/related_files/rao-barista.pdf",
-  base64: "JVBERi0xLjMKJcfs...",
-};
 
 class BooksScreen extends PureComponent {
   constructor(props) {
@@ -111,6 +100,7 @@ class BooksScreen extends PureComponent {
             maxScale={2.0}
             // horizontal={true}
             enablePaging={true}
+            enableAntialiasing={true}
           />
         </View>
       </View>
