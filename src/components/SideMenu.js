@@ -339,7 +339,7 @@ class SideMenu extends PureComponent {
         <View style={[styles.footerBgImgContainer]}>
           <View style={styles.footerTextContainer}>
             <PBText white={true} bold={true} style={{ fontSize: 11 }}>
-              App Version : 0.1 (1001)
+              App Version : 0.2 (1002)
             </PBText>
           </View>
           <Img
