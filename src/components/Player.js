@@ -11,6 +11,7 @@ import PBText from "./PBText";
 import { colors, dimensions } from "src/theme";
 import storageService from "src/services/storageService";
 import Toast from "react-native-easy-toast";
+import AppData from "src/services/appData";
 
 export default class Player extends Component {
   constructor(props) {
@@ -277,9 +278,14 @@ export default class Player extends Component {
 
   render() {
     const track = this.props.tracks[this.state.selectedTrack];
+    console.log(
+      "Track to play is-----",
+      AppData.BASE_URL_AUDIO + track.PostAudio
+    );
     const video = this.state.isChanging ? null : (
       <Video
-        source={{ uri: track.audioUrl }} // Can be a URL or a local file.
+        // source={{ uri: AppData.BASE_URL_AUDIO + track.PostAudio }} // Can be a URL or a local file.
+        source={{ uri: "https://file-examples.com/storage/fe5bae0c1d6245d82e95d0f/2017/11/file_example_MP3_700KB.mp3" }} // Can be a URL or a local file.
         ref="audioElement"
         paused={this.state.paused} // Pauses playback entirely.
         resizeMode="cover" // Fill the whole screen at aspect ratio.

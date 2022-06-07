@@ -8,6 +8,7 @@ import {
   SET_QUIZ_RESULT,
   SET_PROFILE,
   SET_CURRENT_SURAH,
+  SET_ALL_SURAHS,
 } from "./actions";
 
 export const DEFAULT = {};
@@ -60,6 +61,12 @@ export default function data(state = DEFAULT, action = {}) {
       return {
         ...state,
         currentSurah: payload,
+      };
+    }
+    case SET_ALL_SURAHS: {
+      return {
+        ...state,
+        allSurahs: payload,
       };
     }
     default:

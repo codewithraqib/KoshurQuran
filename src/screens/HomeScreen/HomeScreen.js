@@ -7,7 +7,7 @@ import Header from "src/components/Header";
 import { dimensions } from "src/theme";
 import CommonService from "src/services/commonService";
 import { BOOKMARKS_SCREEN, SURAH_PLAY_SCREEN } from "src/navigation";
-import index from "../../assets/index.json";
+import storageService from "src/services/storageService";
 
 var moment = require("moment-hijri");
 
@@ -24,7 +24,19 @@ class HomeScreen extends PureComponent {
   componentDidMount() {
     // console.log({ index });
 
-    this.setState({ tracks: index });
+    // this.setState({ tracks: index });
+
+    this.props.getAllSurahs({
+      callback: (res) => {
+        console.log("All surahs data is-----", res);
+
+        if (res && res.data && res.data.status && res.data.data) {
+          this.setState({ tracks: res.data.data });
+          storageService.setItem("allSurahs", res.data);
+          this.props.setAllSurahs(res.data.data);
+        }
+      },
+    });
   }
 
   goToScreen = (surah) => {
@@ -42,9 +54,9 @@ class HomeScreen extends PureComponent {
       <TouchableOpacity onPress={() => this.goToScreen(surah)}>
         <View key={key} style={styles.listItem}>
           <PBText white={true} style={{ marginRight: 10 }}>
-            {surah.id}
+            {surah.SurahId ? surah.SurahId : surah.id}
           </PBText>
-          <PBText white={true}>{surah.title}</PBText>
+          <PBText white={true}>{surah.PostTitle}</PBText>
         </View>
       </TouchableOpacity>
     );
@@ -58,16 +70,17 @@ class HomeScreen extends PureComponent {
   };
 
   render() {
+    console.log("All surahs are-----", this.state.tracks);
     return (
       <View style={styles.flex}>
         {/* <Player tracks={this.state.TRACKS} /> */}
         <StatusBar
           translucent
-          backgroundColor="#444"
+          backgroundColor="#f7b267"
           barStyle="light-content"
         />
         <Header
-          headerBackgroundColor={{ backgroundColor: "#000" }}
+          headerBackgroundColor={{ backgroundColor: "#f7b267" }}
           message={`Quran Tarjam - Kashur`}
           style={{ height: 62, paddingTop: 20 }}
           onRightIconPress={this.onRightIconPress}
@@ -125,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minHeight: dimensions.vh * 6,
     marginHorizontal: dimensions.vw * 3,
-    backgroundColor: "#001",
+    backgroundColor: "#f4845f",
     marginVertical: 5,
     borderRadius: 4,
     paddingHorizontal: 10,

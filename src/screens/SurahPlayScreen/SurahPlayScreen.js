@@ -9,6 +9,7 @@ import CommonService from "src/services/commonService";
 import Player from "src/components/Player";
 import Header from "src/components/Header";
 import index from "../../assets/index.json";
+import storageService from "src/services/storageService";
 
 const styles = StyleSheet.create({
   flex: {
@@ -20,7 +21,7 @@ class SurahPlayScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = { index: this.props.data && this.props.data.allSurahs };
   }
 
   goToMainScreen = () => {
@@ -32,20 +33,36 @@ class SurahPlayScreen extends PureComponent {
   componentDidMount() {
     console.log("Data in play screen---", this.props);
 
+    storageService.getItem("allSurahs").then((data) => {
+      if (data) {
+        let allSurahs = JSON.parse(data);
+        console.log("All surahs from local storage are", allSurahs);
+      } else {
+        // CommonService.setRoot(LOGIN_SCREEN);
+        console.log("No surah in local storage");
+      }
+    });
+
     if (
+      this.state.index &&
       this.props.data &&
       this.props.data.currentSurah &&
       this.props.data.currentSurah.quranIndex
     ) {
       let currentSurahIndex;
 
-      index.map((val, key) => {
-        if (val.id === this.props.data.currentSurah.surah.id) {
-          currentSurahIndex = key;
-        }
-      });
+      this.state.index &&
+        this.state.index.map((val, key) => {
+          if (val.id === this.props.data.currentSurah.surah.id) {
+            currentSurahIndex = key;
+          }
+        });
+
+      console.log("currentSurahIndex---------", this.state.index.length);
       this.setState({
-        tracks: index.slice(currentSurahIndex, index.length),
+        tracks:
+          this.state.index &&
+          this.state.index.slice(currentSurahIndex, this.state.index.length),
       });
     }
 
@@ -68,6 +85,7 @@ class SurahPlayScreen extends PureComponent {
   };
 
   render() {
+    console.log("Sliced tracks are-------", this.state.tracks);
     return (
       <View style={styles.flex}>
         {/* <StatusBar
