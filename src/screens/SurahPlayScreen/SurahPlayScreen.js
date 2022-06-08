@@ -7,7 +7,7 @@ import { BOOKMARKS_SCREEN, HOME_SCREEN } from "src/navigation";
 import { connectData } from "src/redux";
 import CommonService from "src/services/commonService";
 import Player from "src/components/Player";
-import Header from "src/components/Header";
+import Header from "src/components/HeaderOld";
 import index from "../../assets/index.json";
 import storageService from "src/services/storageService";
 

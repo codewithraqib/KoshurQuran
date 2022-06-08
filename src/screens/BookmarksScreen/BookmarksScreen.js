@@ -14,7 +14,7 @@ import { SURAH_PLAY_SCREEN, YOUTUBE_SCREEN } from "src/navigation";
 import { Neomorph } from "react-native-neomorph-shadows";
 import { ScrollView } from "react-native-gesture-handler";
 import storageService from "src/services/storageService";
-import Header from "src/components/Header";
+import Header from "src/components/HeaderOld";
 import Toast from "react-native-easy-toast";
 
 class BookmarksScreen extends PureComponent {

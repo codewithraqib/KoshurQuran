@@ -1,13 +1,14 @@
 import React, { PureComponent } from "react";
-import { StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StatusBar, StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import { connectData } from "src/redux";
 import { ScrollView } from "react-native-gesture-handler";
 import PBText from "src/components/PBText";
 import Header from "src/components/Header";
-import { dimensions } from "src/theme";
+import { colors, dimensions } from "src/theme";
 import CommonService from "src/services/commonService";
 import { BOOKMARKS_SCREEN, SURAH_PLAY_SCREEN } from "src/navigation";
 import storageService from "src/services/storageService";
+import { WHITE } from "src/constants/Colors";
 
 var moment = require("moment-hijri");
 
@@ -49,14 +50,23 @@ class HomeScreen extends PureComponent {
     );
   };
 
-  renderListItem = (surah, key) => {
+  renderListItem = (item, key) => {
+
+    console.log("Testing surah-----", item)
+
+    const audio = item.item;
     return (
-      <TouchableOpacity onPress={() => this.goToScreen(surah)}>
+      <TouchableOpacity key={item.index} onPress={() => this.goToScreen(surah)}>
         <View key={key} style={styles.listItem}>
-          <PBText white={true} style={{ marginRight: 10 }}>
-            {surah.SurahId ? surah.SurahId : surah.id}
-          </PBText>
-          <PBText white={true}>{surah.PostTitle}</PBText>
+          <View style={styles.postNumber}>
+            <PBText white={true} style={{ fontSize: 12}}>
+              {audio.AudioNumber ? audio.AudioNumber : audio.id}
+            </PBText>
+          </View>
+          <View style={styles.postText}>
+            <PBText white center>{audio.PostTitle}</PBText>
+          </View>
+          
         </View>
       </TouchableOpacity>
     );
@@ -73,33 +83,32 @@ class HomeScreen extends PureComponent {
     console.log("All surahs are-----", this.state.tracks);
     return (
       <View style={styles.flex}>
-        {/* <Player tracks={this.state.TRACKS} /> */}
         <StatusBar
           translucent
-          backgroundColor="#f7b267"
+          backgroundColor={colors.primaryBG}
           barStyle="light-content"
         />
         <Header
-          headerBackgroundColor={{ backgroundColor: "#f7b267" }}
-          message={`Quran Tarjam - Kashur`}
-          style={{ height: 62, paddingTop: 20 }}
-          onRightIconPress={this.onRightIconPress}
+          componentId={this.props.componentId}
+          screenName={'Maulana Faizul Waheed'}
+          showLeftIcon={true}
+          leftIconSize={26}
+          showRightIcon={true}
+          leftIcon={'more-vert'}
+          rightIcon={'chevron-right'}
+          onLeftIconClick={() => CommonService.openCloserMenu()}
+          // onRightIconClick={() => CommonService.goBack()}
+          backgroundColor={colors.primaryBG}
+          iconsColor={WHITE}
         />
-
-        <PBText
-          style={{ marginHorizontal: 12, lineHeight: 19, marginTop: 10 }}
-          center
-          bold
-        >
-          First 77 Surah translations are in process, They will be added soon!
-        </PBText>
-
-        <ScrollView>
-          {this.state.tracks &&
-            this.state.tracks.map((val, key) => {
-              return this.renderListItem(val, key);
-            })}
-        </ScrollView>
+        {this.state.tracks ?
+            <FlatList
+              data={this.state.tracks}
+              renderItem={this.renderListItem}
+              keyExtractor={item => item.id}
+              numColumns={2}
+            />
+        : null}
       </View>
     );
   }
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "#fff" },
-  head: { height: 40, backgroundColor: "#f1f8ff" },
+  head: { height: 40, backgroundColor: colors.primaryBG },
   wrapper: { flexDirection: "row" },
   title: { flex: 1, backgroundColor: "#f6f8fa" },
   row: { height: 36 },
@@ -134,15 +143,39 @@ const styles = StyleSheet.create({
   listItem: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "space-between",
     alignItems: "center",
-    minHeight: dimensions.vh * 6,
-    marginHorizontal: dimensions.vw * 3,
-    backgroundColor: "#f4845f",
-    marginVertical: 5,
-    borderRadius: 4,
+    minHeight: dimensions.vh * 12,
+    // maxWidth:dimensions.vw*30,
+    minWidth: dimensions.vw*92/2,
+    marginLeft: dimensions.vw*2,
+    marginRight: dimensions.vw*2,
+    backgroundColor: colors.thirdColor,
+    marginVertical: 10,
+    borderRadius: 6,
     paddingHorizontal: 10,
+    position:"relative"
   },
+  postNumber:{
+    position:"absolute",
+    top: 0,
+    left: 0,
+    minWidth:40,
+    minHeight: 40,
+    backgroundColor:colors.black,
+    color:"white",
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:"center",
+    borderBottomRightRadius:30,
+    borderTopLeftRadius:6,
+  },
+  postText:{
+    flexDirection:"row", 
+    alignItems:"center", 
+    justifyContent:"center", 
+    flex: 1, 
+    height: "100%"
+  }
 });
 
 export default connectData()(HomeScreen);

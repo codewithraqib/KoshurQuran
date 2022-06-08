@@ -1,12 +1,12 @@
 const colors = {
   // primaryBG: '#f4a261'
-  primaryBG: "#E46868",
-  lightPrimaryBG: "#E18282",
-  primaryColor: "#151a2e",
+  primaryBG: "#041C32",
+  lightPrimaryBG: "#04293A",
+  primaryColor: "#064663",
   secondaryColor: "#e74c3c",
-  thirdColor: "#ee8959",
+  thirdColor: "#181D31",
   secondaryDarkColor: "rgba(227, 87, 78, 0.7)",
-  secondaryBG: "#20153D",
+  secondaryBG: "#1F1D36",
   primaryText: "#fff",
   greyBG: "#f6f6f6",
   menuItemText: "#666",
@@ -15,6 +15,7 @@ const colors = {
   lightPrimary: "#fef1ec",
   greyIcons: "#bfbfbf",
   greenColor: "green",
+  black:"#000"
 };
 
 export default colors;

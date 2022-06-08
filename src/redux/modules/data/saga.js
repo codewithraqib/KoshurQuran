@@ -164,7 +164,7 @@ export function* watchVerifyOtp() {
 
 export function* asyncGetSurahList({ payload }) {
   // eslint-disable-next-line
-  const url = AppData.BASE_URL + `api/all-posts.php`;
+  const url = AppData.BASE_URL + `/api/all-posts.php`;
 
   try {
     const response = yield call(App_Service, {

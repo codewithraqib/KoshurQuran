@@ -9,7 +9,7 @@ import PButton from "src/components/PButton";
 import FullQuizBG from "src/components/FullQuizBG";
 import CarpoolHeader from "src/components/CarpoolHeader";
 import { dimensions } from "src/theme";
-import Header from "src/components/Header";
+import Header from "src/components/HeaderOld";
 
 const styles = StyleSheet.create({
   flex: {

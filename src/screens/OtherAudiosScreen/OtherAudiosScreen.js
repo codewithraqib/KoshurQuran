@@ -13,7 +13,7 @@ import { colors, commonStyles, dimensions } from "src/theme";
 import PBModal from "src/components/PBModal";
 import { connectData } from "src/redux";
 import PBText from "src/components/PBText";
-import Header from "src/components/Header";
+import Header from "src/components/HeaderOld";
 import CommonService from "src/services/commonService";
 import { SURAH_PLAY_SCREEN } from "src/navigation";
 

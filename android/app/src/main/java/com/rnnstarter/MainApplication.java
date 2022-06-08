@@ -1,4 +1,4 @@
-package com.aasankoshurtarjam;
+package com.bracecapps.faizulwaheed;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactNativeHost;

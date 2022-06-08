@@ -9,6 +9,7 @@ import {
   Switch,
   Linking,
   ImageBackground,
+  StatusBar,
 } from "react-native";
 
 import { connectData } from "src/redux";
@@ -334,6 +335,12 @@ class SideMenu extends PureComponent {
   render() {
     return (
       <View style={styles.mainContainer}>
+
+        <StatusBar
+          translucent
+          backgroundColor={colors.primaryBG}
+          barStyle="light-content"
+        />
         <View style={styles.container}>{this.renderMenuScroll()}</View>
         <View style={{ marginTop: 20 }}>{this.renderSocialIcons()}</View>
         <View style={[styles.footerBgImgContainer]}>

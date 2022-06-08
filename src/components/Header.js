@@ -1,69 +1,103 @@
-// @flow
+import React from 'react';
+import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {BLACK, WHITE} from '../constants/Colors';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {FONT_SIZE_SMALL} from '../constants/Dimens';
+import { colors, dimensions } from 'src/theme';
+const STATUS_BAR_HEIGHT = getStatusBarHeight();
 
-import React, { Component } from "react";
+const Header = props => {
+  if (Text.defaultProps == null) Text.defaultProps = {};
+  Text.defaultProps.allowFontScaling = false;
+  return (
+    <View
+      style={[
+        props.backgroundColor
+          ? {backgroundColor: props.backgroundColor}
+          : {backgroundColor: BLACK},
+        styles.top,
+      ]}>
 
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import CommonService from "src/services/commonService";
+        <StatusBar
+          translucent
+          backgroundColor={colors.primaryBG}
+          barStyle="light-content"
+        />
+        <View style={{flex: 1, minWidth: dimensions.vw*33, flexDirection:"row", alignItems:"center",}}>
+          {props.showLeftIcon ? (
+            <Icon
+              name={props.leftIcon ? props.leftIcon : 'chevron-left'}
+              color={props.iconsColor ? props.iconsColor : WHITE}
+              size={
+                props.leftIconSize ? props.leftIconSize : STATUS_BAR_HEIGHT * 0.8
+              }
+              onPress={props.onLeftIconClick}
+              style={{ padding: 10}}
+            />
+          ) : (
+            <Text style={{flex: 1}}>{''}</Text>
+          )}
+        </View>
+      
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <View
+      <View style={{flex: 1, minWidth: dimensions.vw*33, paddingBottom: 10}}>
+        <Text
         style={[
-          styles.container,
-          this.props.headerBackgroundColor,
-          this.props.style,
-        ]}
-      >
-        <TouchableOpacity onPress={CommonService.openCloserMenu}>
-          <Image
-            style={styles.button}
-            source={require("../assets/icons/ios-menu.png")}
-          />
-        </TouchableOpacity>
-        <Text onPress={this.props.onMessagePress} style={styles.message}>
-          {this.props.message.toUpperCase()}
-        </Text>
-        <TouchableOpacity onPress={this.props.onRightIconPress}>
-          <Image
-            style={styles.button}
-            source={require("../assets/icons/book.png")}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+          styles.title,
+          {color: props.iconsColor, textAlign:"center"},
+        ]}>
+        {props.screenName || ''}
+      </Text>
 
-export default Header;
+      </View>
+      
+
+      <View style={{flex: 1, minWidth: dimensions.vw*33, flexDirection:"row", justifyContent:"flex-end"}}>
+        {props.showRightIcon ? (   
+          <Icon
+            name={props.rightIcon ? props.rightIcon : 'more-vert'}
+            color={props.iconsColor ? props.iconsColor : WHITE}
+            size={STATUS_BAR_HEIGHT * 0.7}
+            onPress={props.onRightIconClick}
+            style={{
+              padding: 10,
+            }}
+          />
+          ) : (
+            <Text style={{flex: 1}}>{''}</Text>
+          )}
+      </View>
+      
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    height: 72,
-    paddingTop: 35,
-    paddingLeft: 12,
-    paddingRight: 12,
-    flexDirection: "row",
-    backgroundColor: "#000",
-  },
-  message: {
     flex: 1,
-    textAlign: "center",
-    color: "rgba(255, 255, 255, 0.72)",
-    fontWeight: "bold",
-    fontSize: 10,
-    marginTop: 3,
+    overflow: 'hidden',
   },
-  button: {
-    opacity: 0.72,
-    height: 24,
-    width: 24,
-    tintColor: "#fff",
+  top: {
+    // height: STATUS_BAR_HEIGHT,
+    height: 52,
+    color: WHITE,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    color: WHITE,
+    fontSize: FONT_SIZE_SMALL,
+    marginTop: 14,
+    // borderBottomColor: '#111',
+    // borderBottomWidth: 1,
+  },
+  underliine: {
+    width: 30,
+    height: 2,
+    backgroundColor: BLACK,
+    marginTop: 5,
   },
 });
+
+export default Header;
